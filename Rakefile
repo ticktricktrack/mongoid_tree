@@ -5,8 +5,8 @@ begin
     require 'jeweler'
     Jeweler::Tasks.new do |gem|
         gem.name = "mongoid_tree"
-        gem.summary = %Q{TODO: one-line summary of your gem}
-        gem.description = %Q{TODO: longer description of your gem}
+        gem.summary = %Q{Materialized paths based tree implementation for Mongoid}
+        gem.description = %Q{Fully featured tree implementation for Mongoid using materialized paths and relative associations. Featuring Depth and Breadth first search.}
         gem.email = "rkuhn@littleweblab.com"
         gem.homepage = "http://github.com/rayls/mongoid_tree"
         gem.authors = ["Rainer Kuhn"]
