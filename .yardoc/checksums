@@ -1,0 +1,4 @@
+LICENSE 830d69426215b5dc06f0b1bfadd81a7765feb102
+README.rdoc 54e9ed7255413f6423e6981fb29b9e7c43aafb48
+lib/mongoid_tree.rb adc83b19e793491b1c6ea0fd8b46cd9f32e592fc
+features/mongoid_tree.feature 7a9a2fe2ea383b48c18356b8822ae67caaa20e02
