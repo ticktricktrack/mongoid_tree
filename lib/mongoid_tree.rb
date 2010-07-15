@@ -5,9 +5,8 @@ module Mongoid
       extend ActiveSupport::Concern
       
       included do
-        references_many :children, :class_name => self.class.to_s, :stored_as => :array, :inverse_of => :parent
-        references_many :parent, :class_name => self.class.to_s, :stored_as => :array, :inverse_of => :children                 
-        end
+        references_many :children, :class_name => self.name, :stored_as => :array, :inverse_of => :parent
+        references_many :parent, :class_name => self.name, :stored_as => :array, :inverse_of => :children                 
       end
     end
   end
