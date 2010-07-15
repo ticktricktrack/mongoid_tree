@@ -1,0 +1,51 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activemodel (3.0.0.beta4)
+      activesupport (= 3.0.0.beta4)
+      builder (~> 2.1.2)
+      i18n (~> 0.4.1)
+    activesupport (3.0.0.beta4)
+    bson (1.0.4)
+    builder (2.1.2)
+    cucumber (0.8.5)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.1.4)
+      json_pure (~> 1.4.3)
+      term-ansicolor (~> 1.0.4)
+    diff-lcs (1.1.2)
+    gherkin (2.1.4)
+      trollop (~> 1.16.2)
+    i18n (0.4.1)
+    json_pure (1.4.3)
+    mongo (1.0.5)
+      bson (>= 1.0.4)
+    mongoid (2.0.0.beta9)
+      activemodel (~> 3.0.0.beta)
+      bson (~> 1.0.3)
+      mongo (~> 1.0.3)
+      tzinfo (~> 0.3.22)
+      will_paginate (~> 3.0.pre)
+    rspec (2.0.0.beta.17)
+      rspec-core (= 2.0.0.beta.17)
+      rspec-expectations (= 2.0.0.beta.17)
+      rspec-mocks (= 2.0.0.beta.17)
+    rspec-core (2.0.0.beta.17)
+    rspec-expectations (2.0.0.beta.17)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.17)
+    term-ansicolor (1.0.5)
+    trollop (1.16.2)
+    tzinfo (0.3.22)
+    will_paginate (3.0.pre)
+    yard (0.5.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cucumber (>= 0.8.2)
+  mongoid (>= 2.0.0.beta7)
+  rspec (>= 2.0.0.beta.15)
+  yard
