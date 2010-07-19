@@ -1,6 +1,14 @@
 = mongoid_tree
 
-Description goes here.
+For our commercial application we need a proper tree structure with Depth-First and Breadth-First searches, parent and child information. Also subtrees need to be exported to JSON.
+
+Initially I thought of an embedded solution, but this will only be possible once MongoDB supports embedded collections, and even deep-embedded collections.
+
+However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with RSpec.
+The lack of a proper tree structure is quite noticeable in the mongoid forums.
+
+This gem will receive long-term support since we use it in a commercial long-term application.
+
 
 == Note on Patches/Pull Requests
  
