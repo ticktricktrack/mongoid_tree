@@ -5,7 +5,8 @@ Feature: Tree Searches / Traversals
   
     # For a visual representation see http://en.wikipedia.org/wiki/File:Depth-first-tree.svg
     Background:
-        Given the following nodes exist:   
+        Given I have no nodes
+        And the following nodes exist:   
              | name    | parent |
              | Node_1  |        |
              | Node_2  | Node_1 |
@@ -19,6 +20,7 @@ Feature: Tree Searches / Traversals
              | Node_5  | Node_3 |
              | Node_10 | Node_9 |
              | Node_11 | Node_9 |
+        Then I should have 12 Nodes
 
     Scenario: Depth First Search
         When I request the children depth first
