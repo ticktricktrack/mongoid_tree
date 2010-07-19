@@ -34,11 +34,11 @@ describe "MongoidTree" do
             it "should have 1 child" do
                 @root.children.count.should eq(1)
             end 
-            
+
             it "the child should be able to access the parent" do
-              @child_1.parent.first.should eq(@root)
+                @child_1.get_parent.should eq(@root)
             end
-            
+
         end
 
         context "adding 3 children" do
@@ -49,15 +49,11 @@ describe "MongoidTree" do
                 @child_3 = Node.new(:name => "Child 3")             
                 @root.children << [@child_1, @child_2, @child_3]
             end
-            
+
             it "should have 3 children" do
                 @root.children.count.should be(3)
             end
-            
-            
-
         end
-
     end
 
 end

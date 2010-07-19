@@ -22,6 +22,5 @@ Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
 
 
 RSpec.configure do |config|
-    #--format nested
-    #--color
+
 end
