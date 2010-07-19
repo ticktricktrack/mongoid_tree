@@ -6,7 +6,7 @@ describe "MongoidTree" do
         [ Node ].each { |klass| klass.collection.remove }
     end
 
-    context "with a root node" do
+    context "A root node" do
         before do
             @root = Node.new(:name => "Root")
         end
@@ -31,9 +31,31 @@ describe "MongoidTree" do
                 @child_1.save
             end
 
-            it "should add a child" do
+            it "should have 1 child" do
                 @root.children.count.should eq(1)
-            end  
+            end 
+            
+            it "the child should be able to access the parent" do
+              @child_1.parent.first.should eq(@root)
+            end
+            
+        end
+
+        context "adding 3 children" do
+
+            before do
+                @child_1 = Node.new(:name => "Child 1")
+                @child_2 = Node.new(:name => "Child 2")
+                @child_3 = Node.new(:name => "Child 3")             
+                @root.children << [@child_1, @child_2, @child_3]
+            end
+            
+            it "should have 3 children" do
+                @root.children.count.should be(3)
+            end
+            
+            
+
         end
 
     end
