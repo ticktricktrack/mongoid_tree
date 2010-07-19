@@ -45,7 +45,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cucumber (>= 0.8.2)
-  mongoid (>= 2.0.0.beta7)
-  rspec (>= 2.0.0.beta.15)
+  cucumber (>= 0.8.5)
+  mongoid (>= 2.0.0.beta9)
+  rspec (>= 2.0.0.beta.16)
   yard
