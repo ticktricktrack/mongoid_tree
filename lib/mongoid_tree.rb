@@ -6,8 +6,10 @@ module Mongoid
 
             included do
                 references_many :children, :class_name => self.name, :stored_as => :array, :inverse_of => :parent
-                references_many :parent, :class_name => self.name, :stored_as => :array, :inverse_of => :children
-
+                references_many :parent, :class_name => self.name, :stored_as => :array, :inverse_of => :children 
+            end
+            
+            module InstanceMethods
                 def depth_first
                     result = [self]
                     if children.empty?
@@ -26,8 +28,23 @@ module Mongoid
                 def get_parent
                     return parent.first
                 end
-
+                
+                def insert_before( new_child )
+                    self.get_parent.children << new_child 
+                end
+                
+                def insert_after ( new_child )
+                    self.get_parent.children << new_child 
+                end
+                
+                def parent
+                    raise
+                end
+               
             end
+            
+            
+            
         end
     end
 end

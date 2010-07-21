@@ -37,6 +37,7 @@ describe "MongoidTree" do
 
             it "the child should be able to access the parent" do
                 @child_1.get_parent.should eq(@root)
+                @child_1.get_parent.class.to_s.should eq("Node")
             end
 
         end

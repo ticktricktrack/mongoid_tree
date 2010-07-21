@@ -1,1 +1,3 @@
-default: --format progress features --color
+default: --format pretty features --color
+autotest-all: --color --require features --require lib --format pretty features 
+autotest: --color --require features --require lib features --format pretty
