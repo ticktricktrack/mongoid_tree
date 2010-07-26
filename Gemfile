@@ -1,5 +1,5 @@
 source :rubygems
-gem "mongoid", ">= 2.0.0.beta9"
+gem "mongoid", ">= 2.0.0.beta11"
 # Currently used MongoDB version : 1.4.3
 
 gem "rspec", ">= 2.0.0.beta.17"

@@ -6,55 +6,74 @@ describe "MongoidTree" do
         [ Node ].each { |klass| klass.collection.remove }
     end
 
-    context "A root node" do
-        before do
-            @root = Node.new(:name => "Root")
-        end
+    describe "A tree of nodes" do
 
-        context "without children" do
-            it "should have a name" do
-                @root.name.should eq("Root") 
-            end
-
-            it "should have no children" do
-                @root.children.count.should be(0)
-            end
-
-        end
-
-        context "adding a child" do
-
+        context "A node with a child" do
+            
             before do
-                @child_1 = Node.new(:name => "Child 1")
-                @root.children << @child_1
-                @root.save
-                @child_1.save
+                @parent = Node.new(:name => "Parent")
+                @child = Node.new(:name => "Child")
+                @parent.children << @child
+                @parent.save
             end
-
+            
             it "should have 1 child" do
-                @root.children.count.should eq(1)
-            end 
+                @parent.children.count.should be(1)
+                @parent.children.first.should eq(@child)
+            end        
 
-            it "the child should be able to access the parent" do
-                @child_1.get_parent.should eq(@root)
-                @child_1.get_parent.class.to_s.should eq("Node")
+            it "a child should know it's parent" do
+                @child.parent.should eq(@parent)
             end
-
         end
 
-        context "adding 3 children" do
-
+        context "a node with 2 children" do
             before do
-                @child_1 = Node.new(:name => "Child 1")
-                @child_2 = Node.new(:name => "Child 2")
-                @child_3 = Node.new(:name => "Child 3")             
-                @root.children << [@child_1, @child_2, @child_3]
+                @parent = Node.new(:name => "Parent")
+                @child_1 = Node.new(:name => "Child_1")
+                @child_2 = Node.new(:name => "Child_2")
+                @child_3 = Node.new(:name => "Child_3")
+                @parent.children << @child_1
+                @parent.children << @child_2
+                @parent.save
+            end
+            
+            it "should add a child before child 1" do
+                @child_1.insert_before(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_1)
+                @parent.children.sort.to_a.shift.should eq(@child_2)
             end
 
-            it "should have 3 children" do
-                @root.children.count.should be(3)
+            it "should add a child after child 1" do
+                @child_1.insert_after(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_1)
+                @parent.children.sort.to_a.shift.should eq(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_2)
             end
+
+            it "should add a child before child 2" do
+                @child_2.insert_before(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_1)
+                @parent.children.sort.to_a.shift.should eq(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_2)
+            end
+
+            it "should add a child after child 2" do
+                @child_2.insert_before(@child_3)
+                @parent.children.sort.to_a.shift.should eq(@child_1)
+                @parent.children.sort.to_a.shift.should eq(@child_2)
+                @parent.children.sort.to_a.shift.should eq(@child_3)
+            end
+
+            it "should append a child to children" do
+                @parent.children << @child_3
+                @parent.children.sort.to_a.shift.should eq(@child_1)
+                @parent.children.sort.to_a.shift.should eq(@child_2)
+                @parent.children.sort.to_a.shift.should eq(@child_3)
+            end
+            
         end
-    end
 
+    end
 end
