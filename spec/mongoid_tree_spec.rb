@@ -25,6 +25,10 @@ describe "MongoidTree" do
             it "a child should know it's parent" do
                 @child.parent.should eq(@parent)
             end
+            
+            it "the child should be at position 1" do
+              @parent.children.first.position.should eq(1)
+            end
         end
 
         context "a node with 2 children" do
@@ -35,14 +39,15 @@ describe "MongoidTree" do
                 @child_3 = Node.new(:name => "Child_3")
                 @parent.children << @child_1
                 @parent.children << @child_2
+                @child_1.position.should eq(1)
+                @child_2.position.should eq(2)
                 @parent.save
             end
             
             it "should add a child before child 1" do
                 @child_1.insert_before(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_1)
-                @parent.children.sort.to_a.shift.should eq(@child_2)
+                @parent.save
+                @parent.children.sort.should eq([@child_3, @child_2, @child_1])
             end
 
             it "should add a child after child 1" do

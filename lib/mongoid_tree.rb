@@ -4,11 +4,20 @@ module Mongoid
             extend ActiveSupport::Concern
 
             included do
-                references_many :children, :class_name => self.name, :stored_as => :array, :inverse_of => :parent
+                references_many :children, :class_name => self.name, :stored_as => :array, :inverse_of => :parent do
+                    def <<(*objects)
+                        #raise @parent.send(@foreign_key).count.to_s
+                        #raise objects.first.class.to_s
+                        objects.flatten.each_with_index do |object, index|
+                            if object.position == nil
+                                object.position = @parent.send(@foreign_key).count + index + 1
+                            end
+                        end
+                        super
+                    end
+                end
                 referenced_in :parent, :class_name  => self.name, :reverse_of => :children
 
-                # field :parent_id
-                # field :children_ids
             end
 
             module InstanceMethods

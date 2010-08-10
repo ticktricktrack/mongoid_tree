@@ -7,7 +7,7 @@ class Node
 
     # This stores the position in the children array of the parent object.
     # Makes it easier to flatten / export / import a tree
-    field :position, :type => Integer, :default => 1
+    field :position, :type => Integer
     
     validates_presence_of :name
     
