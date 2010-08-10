@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mongoid_tree}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rainer Kuhn"]
-  s.date = %q{2010-07-07}
+  s.date = %q{2010-08-10}
   s.description = %q{Fully featured tree implementation for Mongoid using materialized paths and relative associations. Featuring Depth and Breadth first search.}
   s.email = %q{rkuhn@littleweblab.com}
   s.extra_rdoc_files = [
@@ -17,18 +17,20 @@ Gem::Specification.new do |s|
      "README.rdoc"
   ]
   s.files = [
-    ".document",
+    ".bundle/config",
      ".gitignore",
      ".rspec",
      ".yardoc/checksums",
      ".yardoc/objects/root.dat",
      ".yardoc/proxy_types",
      "Gemfile",
+     "Gemfile.lock",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
      "VERSION",
      "autotest/discover.rb",
+     "cucumber.yml",
      "doc/_index.html",
      "doc/class_list.html",
      "doc/css/common.css",
@@ -43,10 +45,13 @@ Gem::Specification.new do |s|
      "doc/js/jquery.js",
      "doc/method_list.html",
      "doc/top-level-namespace.html",
-     "features/mongoid_tree.feature",
      "features/step_definitions/mongoid_tree_steps.rb",
      "features/support/env.rb",
+     "features/traversal.feature",
      "lib/mongoid_tree.rb",
+     "mongoid_tree.gemspec",
+     "spec/factories/node.rb",
+     "spec/models/node.rb",
      "spec/mongoid_tree_spec.rb",
      "spec/spec_helper.rb"
   ]
@@ -56,7 +61,9 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Materialized paths based tree implementation for Mongoid}
   s.test_files = [
-    "spec/mongoid_tree_spec.rb",
+    "spec/factories/node.rb",
+     "spec/models/node.rb",
+     "spec/mongoid_tree_spec.rb",
      "spec/spec_helper.rb"
   ]
 
