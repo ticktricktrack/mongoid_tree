@@ -1,6 +1,6 @@
 source :rubygems
 gem "jeweler"
-gem "mongoid", "= 2.0.0.beta.15"
+gem "mongoid", "= 2.0.0.beta.16"
 # Currently used MongoDB version : 1.4.3
 
 gem "rspec", ">= 2.0.0.beta.19"

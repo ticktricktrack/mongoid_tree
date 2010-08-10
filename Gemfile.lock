@@ -26,12 +26,12 @@ GEM
       git (>= 1.2.5)
       rubyforge (>= 2.0.0)
     json_pure (1.4.3)
-    mongo (1.0.6)
+    mongo (1.0.7)
       bson (>= 1.0.4)
-    mongoid (2.0.0.beta.15)
+    mongoid (2.0.0.beta.16)
       activemodel (= 3.0.0.rc)
       bson (= 1.0.4)
-      mongo (= 1.0.6)
+      mongo (= 1.0.7)
       tzinfo (= 0.3.22)
       will_paginate (~> 3.0.pre)
     rspec (2.0.0.beta.19)
@@ -57,6 +57,6 @@ DEPENDENCIES
   cucumber (>= 0.8.5)
   factory_girl
   jeweler
-  mongoid (= 2.0.0.beta.15)
+  mongoid (= 2.0.0.beta.16)
   rspec (>= 2.0.0.beta.19)
   yard

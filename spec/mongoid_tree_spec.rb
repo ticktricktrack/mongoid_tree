@@ -29,14 +29,23 @@ describe "MongoidTree" do
             it "the child should be at position 1" do
               @parent.children.first.position.should eq(1)
             end
+            
         end
 
         context "a node with 2 children" do
+            
+            def reload
+                @parent.reload
+                @child_1.reload
+                @child_2.reload
+                @new_child.reload
+            end
+            
             before do
                 @parent = Node.new(:name => "Parent")
                 @child_1 = Node.new(:name => "Child_1")
                 @child_2 = Node.new(:name => "Child_2")
-                @child_3 = Node.new(:name => "Child_3")
+                @new_child = Node.new(:name => "new_child")
                 @parent.children << @child_1
                 @parent.children << @child_2
                 @child_1.position.should eq(1)
@@ -45,37 +54,37 @@ describe "MongoidTree" do
             end
             
             it "should add a child before child 1" do
-                @child_1.insert_before(@child_3)
-                @parent.save
-                @parent.children.sort.should eq([@child_3, @child_2, @child_1])
+                @child_1.insert_before(@new_child)
+                reload
+                @parent.children.sort.should eq([@new_child, @child_1, @child_2])
             end
 
             it "should add a child after child 1" do
-                @child_1.insert_after(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_1)
-                @parent.children.sort.to_a.shift.should eq(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_2)
+                @child_1.insert_after(@new_child)
+                reload
+                @parent.children.sort.should eq([@child_1, @new_child, @child_2])
             end
 
             it "should add a child before child 2" do
-                @child_2.insert_before(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_1)
-                @parent.children.sort.to_a.shift.should eq(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_2)
+                @child_2.insert_before(@new_child)
+                reload
+                @parent.children.sort.should eq([@child_1, @new_child, @child_2])
             end
 
             it "should add a child after child 2" do
-                @child_2.insert_before(@child_3)
-                @parent.children.sort.to_a.shift.should eq(@child_1)
-                @parent.children.sort.to_a.shift.should eq(@child_2)
-                @parent.children.sort.to_a.shift.should eq(@child_3)
+                @child_2.insert_after(@new_child)
+                reload
+                @parent.children.sort.should eq([@child_1, @child_2, @new_child])
             end
 
             it "should append a child to children" do
-                @parent.children << @child_3
-                @parent.children.sort.to_a.shift.should eq(@child_1)
-                @parent.children.sort.to_a.shift.should eq(@child_2)
-                @parent.children.sort.to_a.shift.should eq(@child_3)
+                @parent.reload
+                @parent.children << @new_child
+                @parent.children.count.should eq(3)
+                @parent.save
+                @new_child.save
+                reload                
+                @parent.children.sort.should eq([@child_1, @child_2, @new_child])
             end
             
         end
