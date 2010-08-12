@@ -23,18 +23,19 @@ Feature: Tree Searches / Traversals
         And I should have 12 Nodes
         When I request the children depth first
         Then I should get the children in the following order
-            |Node_1|
-            |Node_2|
-            |Node_3|
-            |Node_4|
-            |Node_5|
-            |Node_6|
-            |Node_7|
-            |Node_8|
-            |Node_9|
-            |Node_10|
-            |Node_11|
-            |Node_12|
+            | Node_1  |
+            | Node_2  |
+            | Node_3  |
+            | Node_4  |
+            | Node_5  |
+            | Node_6  |
+            | Node_7  |
+            | Node_8  |
+            | Node_9  |
+            | Node_10 |
+            | Node_11 |
+            | Node_12 |
+
     
     
         Scenario: Depth First Search with other create Order
@@ -79,15 +80,41 @@ Feature: Tree Searches / Traversals
             And I should have 12 Nodes
             When I request the children depth first
             Then I should get the children in the following order
-                |Node_1|
-                |Node_2|
-                |Node_3|
-                |Node_4|
-                |Node_5|
-                |Node_6|
-                |Node_7|
-                |Node_8|
-                |Node_9|
-                |Node_10|
-                |Node_11|
-                |Node_12|
+                | Node_1  |
+                | Node_2  |
+                | Node_3  |
+                | Node_4  |
+                | Node_5  |
+                | Node_6  |
+                | Node_7  |
+                | Node_8  |
+                | Node_9  |
+                | Node_10 |
+                | Node_11 |
+                | Node_12 |
+
+        # Same tree as in the Depth-First-Examples
+        # For a visual representation see http://en.wikipedia.org/wiki/File:Depth-first-tree.svg
+        # http://en.wikipedia.org/wiki/Breadth-first_search
+        Scenario: Bread First Search
+          Given I have no nodes
+          And I create a tree
+          When I request the children breadth first
+          Then I should get the children in the following order
+            | Node_1  |
+            | Node_2  |
+            | Node_7  |
+            | Node_8  |
+            | Node_3  |
+            | Node_6  |
+            | Node_9  |
+            | Node_12 |
+            | Node_4  |
+            | Node_5  |
+            | Node_10 |
+            | Node_11 |
+
+
+        
+        
+        
