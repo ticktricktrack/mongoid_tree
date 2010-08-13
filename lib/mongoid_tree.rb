@@ -45,7 +45,7 @@ module Mongoid
                     self.position <=> another_node.position
                 end
 
-
+                
                 # TODO change this into a Mongoid Query, if possible
                 def depth_first
                     result = [self]
@@ -58,16 +58,21 @@ module Mongoid
                     end
                     return result                    
                 end
-
+                alias :dfs :depth_first
+                
                 def breadth_first
+                    result = []
                     queue = [self]
                     while !queue.empty?
                         node = queue.shift
+                        result << node
                         node.children.sort.each do |child|
                             queue << child
                         end
                     end
+                    return result
                 end
+                alias :bfs :breadth_first
                 
                 def insert_before( new_child )
                     new_child.position = self.position
