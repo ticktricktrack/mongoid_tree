@@ -1,25 +1,50 @@
-= mongoid_tree
+h1. mongoid_tree
 
-For our commercial application we need a proper tree structure with Depth-First and Breadth-First searches, parent and child information. Also subtrees need to be exported to JSON.
+For our application we need a proper tree structure with Depth-First and Breadth-First searches, parent and child information. Also subtrees need to be exported to JSON. This gem will receive long-term support since we use it in our commercial long-term application.
 
 Initially I thought of an embedded solution, but this will only be possible once MongoDB supports embedded collections, and even deep-embedded collections.
 
-However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with RSpec.
-The lack of a proper tree structure is quite noticeable in the mongoid forums.
+However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with Cucumber and RSpec.
 
-This gem will receive long-term support since we use it in a commercial long-term application.
+h2. Installation
 
+Install as Gem
+<code>
+  gem install mongoid_tree
+</code>
 
-== Note on Patches/Pull Requests
+via Gemfile
+<code>
+  gem 'mongoid_tree', '0.3.1'
+</code>
+
+h2. Usage
+  
+mongoid_tree can be included as module
+
+<code><pre>
+class Node
+    include Mongoid::Document
+    include Mongoid::Acts::Tree
+
+    field :name
+    validates_presence_of :name
+end
+</pre></code>
+
+  
+
+h2. Jeweler Standard Text
+
+h3. Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
+* Add tests for it. This is important so I don't break it in a future version unintentionally.
 * Commit, do not mess with rakefile, version, or history.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+h3. Copyright
 
-Copyright (c) 2010 Rainer Kuhn. See LICENSE for details.
+Copyright (c) 2010 Rainer Kuhn, LittleWebLab.com. See LICENSE for details.
