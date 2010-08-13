@@ -8,7 +8,7 @@ begin
         gem.summary = %Q{Materialized paths based tree implementation for Mongoid}
         gem.description = %Q{Fully featured tree implementation for Mongoid using materialized paths and relative associations. Featuring Depth and Breadth first search.}
         gem.email = "rkuhn@littleweblab.com"
-        gem.homepage = "http://github.com/rayls/mongoid_tree"
+        gem.homepage = "http://github.com/ticktricktrack/mongoid_tree"
         gem.authors = ["Rainer Kuhn"]
         # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
     end
