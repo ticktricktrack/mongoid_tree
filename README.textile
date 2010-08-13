@@ -20,10 +20,10 @@ via Gemfile
 
 h2. Usage
   
-mongoid_tree can be included as module
+mongoid_tree can be included as a module
 
 <pre><code>
-class Node
+class Category
     include Mongoid::Document
     include Mongoid::Acts::Tree
 
@@ -31,7 +31,74 @@ class Node
     validates_presence_of :name
 end
 </code></pre>
-  
+
+The following methods and fields are provided:
+
+h3. Adding Children
+
+I use the  _ :references_many, :stored_as => :array_ association Mongoid provides. Association names are fixed to .children and .parent at the moment, but I might make this optional later on.
+
+<pre><code>
+# Appending a child node
+root_node.children << Category.new(:name => "node")
+
+# Inserting a child node before another node
+node_2.insert_before(Category.new(:name => "node_1"))
+
+# Inserting a child node after another node
+node_2.insert_before(Category.new(:name => "node_3"))
+</code></pre>
+
+h2. Accessing the Parent Object
+
+<pre><code>
+node.parent # --> root_node
+</code></pre>
+
+h2. Deleting Subtrees
+
+Just use the usual Association Methods provided by Mongoid. The entire subtree will also be deleted
+<pre><code>
+node.delete
+#or
+node.destroy
+</code></pre>
+
+h2. Moving Subtrees
+
+You unhinge an entire subtree from it's parent and move it to a new parent. The subtrees path information will automatically be rebuild.
+<pre><code>
+node4.move_to(node_1)
+</code></pre>
+
+h2. Depth First
+
+<p><img alt="File:Depth-first-tree.svg" src="http://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Depth-first-tree.svg/390px-Depth-first-tree.svg.png" width="390" height="250" /></p>
+This is probably your standard call if you want to loop to your tree. E.g. when building a menu. Calling Depth First will return the entire subtree *including* the node you called it on.
+<pre><code>
+root_node.depth_first
+# or
+root_node.dfs
+
+#returns
+[ root_node, child_1, child_1.1, child_2, child_2.1, child_2.2 ]
+</code></pre>
+
+h2. Breadth First
+
+<p><img alt="File:Breadth-first-tree.svg" src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Breadth-first-tree.svg/390px-Breadth-first-tree.svg.png" width="390" height="250" /></p>
+This is a hardly used option, but hey, why not? Calling Breadth First will return the entire subtree *including* the node you called it on.
+<pre><code>
+root_node.breadth_first
+# or
+root_node.bfs
+
+#returns
+[ root_node, child_1, child_2, child_1.1, child_2.1, child_2.2 ]
+</code></pre>
+
+
+
 
 h2. Jeweler Standard Text
 
