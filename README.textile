@@ -77,7 +77,7 @@ h2. Depth First
 This is probably your standard call if you want to loop to your tree. E.g. when building a menu. Calling Depth First will return the entire subtree *including* the node you called it on.
 <pre><code>
 root_node.depth_first
-# or
+#or
 root_node.dfs
 
 #returns
@@ -90,7 +90,7 @@ h2. Breadth First
 This is a hardly used option, but hey, why not? Calling Breadth First will return the entire subtree *including* the node you called it on.
 <pre><code>
 root_node.breadth_first
-# or
+#or
 root_node.bfs
 
 #returns
