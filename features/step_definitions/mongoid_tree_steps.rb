@@ -51,6 +51,11 @@ When /^I move a subtree$/ do
     Node.first(:conditions => {:name => "Node_9"}).move_to(Node.first(:conditions => {:name => "Node_6"}))
 end
 
+When /^I delete a subtree$/ do
+    Node.first(:conditions => {:name => "Node_9"}).destroy
+end
+
+
 Then /^I should get the children in the following order$/ do |expected_children_order|
     # table is a Cucumber::Ast::Table
     expected_children_order.diff!(@children)

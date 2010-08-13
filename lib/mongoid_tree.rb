@@ -5,7 +5,11 @@ module Mongoid
             include Comparable
 
             included do
-                references_many :children, :class_name => self.name, :stored_as => :array, :inverse_of => :parents do
+                references_many :children, 
+                                :class_name => self.name, 
+                                :stored_as => :array, 
+                                :inverse_of => :parents,
+                                :dependent => :destroy do
                     def <<(*objects)
                         objects.flatten.each_with_index do |object, index|
                             reverse_key = reverse_key(object)
@@ -22,7 +26,10 @@ module Mongoid
                     end
                 end
 
-                references_many :parents, :class_name => self.name, :stored_as => :array, :inverse_of => :children
+                references_many :parents, 
+                                :class_name => self.name, 
+                                :stored_as => :array, 
+                                :inverse_of => :children
 
                 # This stores the position in the children array of the parent object.
                 # Makes it easier to flatten / export / import a tree
