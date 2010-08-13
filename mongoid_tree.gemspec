@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mongoid_tree}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rainer Kuhn"]
-  s.date = %q{2010-08-12}
+  s.date = %q{2010-08-13}
   s.description = %q{Fully featured tree implementation for Mongoid using materialized paths and relative associations. Featuring Depth and Breadth first search.}
   s.email = %q{rkuhn@littleweblab.com}
   s.extra_rdoc_files = [
@@ -45,6 +45,7 @@ Gem::Specification.new do |s|
      "doc/js/jquery.js",
      "doc/method_list.html",
      "doc/top-level-namespace.html",
+     "features/modify_tree.feature",
      "features/step_definitions/mongoid_tree_steps.rb",
      "features/support/env.rb",
      "features/traversal.feature",
@@ -55,7 +56,7 @@ Gem::Specification.new do |s|
      "spec/mongoid_tree_spec.rb",
      "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/rayls/mongoid_tree}
+  s.homepage = %q{http://github.com/ticktricktrack/mongoid_tree}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
