@@ -22,7 +22,7 @@ h2. Usage
   
 mongoid_tree can be included as module
 
-<code><pre>
+<pre><code>
 class Node
     include Mongoid::Document
     include Mongoid::Acts::Tree
@@ -30,8 +30,7 @@ class Node
     field :name
     validates_presence_of :name
 end
-</pre></code>
-
+</code></pre>
   
 
 h2. Jeweler Standard Text
