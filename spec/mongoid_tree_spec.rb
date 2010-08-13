@@ -122,6 +122,19 @@ describe "MongoidTree" do
         getNode(5).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(3).id])
         getNode(10).parent_ids.should eql([getNode(1).id, getNode(8).id, getNode(9).id])
       end
+      
+      context "Moving a subtree" do
+        it "should rebuild the paths" do
+          getNode(9).move_to(getNode(6))
+          getNode(2).child_ids.should eql([getNode(3).id, getNode(6).id])
+          getNode(8).child_ids.should eql([getNode(12).id])
+          
+          
+          getNode(9).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(6).id])
+          getNode(10).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(6).id, getNode(9).id])
+          getNode(11).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(6).id, getNode(9).id])
+          end
+      end
 
     end
 

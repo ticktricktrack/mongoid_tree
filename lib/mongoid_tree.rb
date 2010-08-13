@@ -45,11 +45,10 @@ module Mongoid
                     self.position <=> another_node.position
                 end
 
-                
-                # TODO change this into a Mongoid Query, if possible
+                # Returns the whole subtree including itself as array
                 def depth_first
                     result = [self]
-                    if children.empty?
+                    if self.child_ids.empty?
                         return result
                     else
                         self.children.sort.each do |child|
@@ -59,7 +58,8 @@ module Mongoid
                     return result                    
                 end
                 alias :dfs :depth_first
-                
+
+                # Returns the whole subtree including itself as array
                 def breadth_first
                     result = []
                     queue = [self]
@@ -93,10 +93,31 @@ module Mongoid
                     end
                     self.parent.children << new_child
                 end
+                
+                def move_to(target_node)
+                    # unhinge - I was getting a nil on another implementation, so this is a bit longer but works
+                    child_ids_array = self.parent.child_ids.clone
+                    child_ids_array.delete(self.id)
+                    parent.update_attributes(:child_ids => child_ids_array )
+                    self.update_attributes(:parent_ids => [])
+                    # and append
+                    target_node.children << self
+                    # recurse through subtree
+                    self.rebuild_paths
+                end
+                
+                def rebuild_paths
+                    self.update_path
+                    self.children.each do |child|
+                        child.rebuild_paths
+                    end
+                end
+                
+                def update_path
+                    self.update_attributes(:parent_ids => self.parent.parent_ids + [self.parent.id])
+                end
+                
             end
-
-
-
         end
     end
 end

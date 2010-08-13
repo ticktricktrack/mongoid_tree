@@ -38,12 +38,17 @@ When /^I request the children depth first$/ do
     @root = Node.find(:first, :conditions => { :name => "Node_1" })
     @root.should_not be(nil)
     @children = @root.depth_first.map{|node| [node.name]}
+    puts @children.inspect
 end
 
 When /^I request the children breadth first$/ do
     @root = Node.find(:first, :conditions => { :name => "Node_1" })
     @root.should_not be(nil)
     @children = @root.breadth_first.map{|node| [node.name]}
+end
+
+When /^I move a subtree$/ do
+    Node.first(:conditions => {:name => "Node_9"}).move_to(Node.first(:conditions => {:name => "Node_6"}))
 end
 
 Then /^I should get the children in the following order$/ do |expected_children_order|
