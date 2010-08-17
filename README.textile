@@ -113,4 +113,6 @@ h3. Note on Patches/Pull Requests
 
 h3. Copyright
 
+Used Images are from "Wikipedia":http://commons.wikimedia.org/wiki/Main_Page 
+
 Copyright (c) 2010 Rainer Kuhn, LittleWebLab.com. See LICENSE for details.

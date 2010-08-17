@@ -11,6 +11,9 @@ begin
         gem.homepage = "http://github.com/ticktricktrack/mongoid_tree"
         gem.authors = ["Rainer Kuhn"]
         # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+        
+        gem.add_depency('mongoid', '>= 2.0.0.beta.16')
+        
     end
     Jeweler::GemcutterTasks.new
 rescue LoadError
