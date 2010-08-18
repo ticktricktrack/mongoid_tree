@@ -15,7 +15,7 @@ Install as Gem
 
 via Gemfile
 <code>
-  gem 'mongoid_tree', '0.3.1'
+  gem 'mongoid_tree', '0.3.2'
 </code>
 
 h2. Usage
