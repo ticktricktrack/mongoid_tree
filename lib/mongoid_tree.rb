@@ -85,7 +85,7 @@ module Mongoid
                     new_child.position = self.position
                     self.parent.children.each do |child|
                         if child.position >= new_child.position
-                            child.position += 1
+                            child.update_attributes(:position => child.position + 1)
                         end
                     end
                     self.parent.reload.children << new_child
@@ -95,7 +95,7 @@ module Mongoid
                     new_child.position = self.position + 1
                     self.parent.children.each do |child|
                         if child.position >= new_child.position
-                            child.position += 1
+                          child.update_attributes(:position => child.position + 1)
                         end
                     end
                     self.parent.children << new_child
