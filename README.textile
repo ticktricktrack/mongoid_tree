@@ -6,6 +6,17 @@ Initially I thought of an embedded solution, but this will only be possible once
 
 However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with Cucumber and RSpec.
 
+h3. Screencasts
+
+I've made a screencast demonstrating our tree gem, where I go over the basic methods provided: 
+* "Demo Youtube":http://www.youtube.com/watch?v=TcARGLkBzHw 
+* "Demo screencast.com":http://www.screencast.com/t/N2FlYWFlYz 
+
+and a "Making Of" screencast, mostly about ruby metaprogramming 
+* "Making Of Youtube":http://www.youtube.com/watch?v=PzjWFrfO7gc 
+* "Making Of screencast.com":http://www.screencast.com/t/M2QxNDY3M
+
+
 h2. Installation
 
 Install as Gem
@@ -15,11 +26,11 @@ Install as Gem
 
 via Gemfile
 <code>
-  gem 'mongoid_tree', '0.3.2'
+  gem 'mongoid_tree', '0.3.3'
 </code>
 
 h2. Usage
-  
+
 mongoid_tree can be included as a module
 
 <pre><code>
