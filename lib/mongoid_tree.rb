@@ -6,11 +6,14 @@ module Mongoid
 
             included do
                 references_many :children, 
-                                :class_name => self.name, 
-                                :stored_as => :array, 
-                                :inverse_of => :parents,
-                                :dependent => :destroy do
+                :class_name => self.name, 
+                :stored_as => :array, 
+                :inverse_of => :parents,
+                :dependent => :destroy do
                     def <<(*objects)
+                        # in this version I did not call super, but instead copy the code from the mongoid gem in here
+                        # I had some persistence fails on saved objects so I'm trying it this way now
+                        @target = @target.entries
                         objects.flatten.each_with_index do |object, index|
                             reverse_key = reverse_key(object)
                             if object.position == nil
@@ -20,16 +23,37 @@ module Mongoid
                             # Stores the parents path into it's own path array.
                             #raise @parent.inspect
                             object.send(reverse_key).concat(@parent.send(reverse_key))
-                        end
-                        super(objects)
+                            # object.save unless @parent.new_record?
+                            # First set the documents id on the parent array of ids.
+                            @parent.send(@foreign_key) << object.id
+                            # Then we need to set the parent's id on the documents array of ids
+                            # to get the inverse side of the association as well. Note, need a
+                            # clean way to handle this with new documents - we want to set the
+                            # actual objects as well, but dont want to get in an infinite loop
+                            # while doing so.
 
+                            if inverse?
+                                reverse_key = reverse_key(object)
+                                case inverse_of(object).macro
+                                when :references_many
+                                    object.send(reverse_key) << @parent.id
+                                when :referenced_in
+                                    object.send("#{reverse_key}=", @parent.id)
+                                end
+                            end
+                            @target << object
+                            object.save unless @parent.new_record?
+
+                        end  
+                        @parent.save unless @parent.new_record?                      
+                        # super(objects)                        
                     end
                 end
 
                 references_many :parents, 
-                                :class_name => self.name, 
-                                :stored_as => :array, 
-                                :inverse_of => :children
+                :class_name => self.name, 
+                :stored_as => :array, 
+                :inverse_of => :children
 
                 # This stores the position in the children array of the parent object.
                 # Makes it easier to flatten / export / import a tree
@@ -80,7 +104,7 @@ module Mongoid
                     return result
                 end
                 alias :bfs :breadth_first
-                
+
                 def insert_before( new_child )
                     new_child.position = self.position
                     self.parent.children.each do |child|
@@ -95,12 +119,12 @@ module Mongoid
                     new_child.position = self.position + 1
                     self.parent.children.each do |child|
                         if child.position >= new_child.position
-                          child.update_attributes(:position => child.position + 1)
+                            child.update_attributes(:position => child.position + 1)
                         end
                     end
                     self.parent.children << new_child
                 end
-                
+
                 def move_to(target_node)
                     # unhinge - I was getting a nil on another implementation, so this is a bit longer but works
                     child_ids_array = self.parent.child_ids.clone
@@ -112,18 +136,18 @@ module Mongoid
                     # recurse through subtree
                     self.rebuild_paths
                 end
-                
+
                 def rebuild_paths
                     self.update_path
                     self.children.each do |child|
                         child.rebuild_paths
                     end
                 end
-                
+
                 def update_path
                     self.update_attributes(:parent_ids => self.parent.parent_ids + [self.parent.id])
                 end
-                
+
             end
         end
     end
