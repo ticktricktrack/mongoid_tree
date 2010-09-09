@@ -29,6 +29,39 @@ describe "MongoidTree" do
       it "the child should be at position 1" do
         @parent.children.first.position.should eq(1)
       end
+      
+      context "on the parent" do
+        it "should not be a leaf node" do
+          @parent.leaf?.should be(false)
+        end
+        
+        it "should have depth 0" do
+          @parent.depth.should be(0)
+        end
+        
+        it "should be root" do
+          @parent.root?.should be(true)
+        end
+      end
+      
+      context "on the child" do
+        it "should be a leaf node" do
+          @child.leaf?.should be(true)
+        end
+        
+        it "should have depth 1" do
+          @child.depth.should be(1)
+        end
+        
+        it "should return the parent as root" do
+          @child.root.should eq(@parent)
+        end
+        
+        it "should not be root" do
+          @child.root?.should be(false)
+        end
+        
+      end
 
     end
 

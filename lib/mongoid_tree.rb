@@ -58,31 +58,51 @@ module Mongoid
                 # This stores the position in the children array of the parent object.
                 # Makes it easier to flatten / export / import a tree
                 field :position, :type => Integer
-                field :depth, :type => Integer
             end
 
             module InstanceMethods
-
+                
+                
                 def parent
-                    self.parents.last
+                    parents.last
                 end
 
                 def depth
-                    self.parents.count
+                    parent_ids.count
+                end
+                
+                def leaf?
+                   child_ids.empty?
+                end
+
+                def root?
+                  parent_ids.empty?
+                end
+                
+                def root
+                  base_class.find(parent_ids.first)
+                end
+                
+                def ancestors
+                  base_class.where(:id.in => parent_ids)
+                end
+                
+                def ancestors_and_self
+                  ancestors + [self]
                 end
 
                 #Comparable
                 def <=> (another_node)
-                    self.position <=> another_node.position
+                    position <=> another_node.position
                 end
 
                 # Returns the whole subtree including itself as array
                 def depth_first
                     result = [self]
-                    if self.child_ids.empty?
+                    if child_ids.empty?
                         return result
                     else
-                        self.children.sort.each do |child|
+                        children.sort.each do |child|
                             result += child.depth_first
                         end    
                     end
@@ -106,46 +126,54 @@ module Mongoid
                 alias :bfs :breadth_first
 
                 def insert_before( new_child )
-                    new_child.position = self.position
-                    self.parent.children.each do |child|
+                    new_child.position = position
+                    parent.children.each do |child|
                         if child.position >= new_child.position
                             child.update_attributes(:position => child.position + 1)
                         end
                     end
-                    self.parent.reload.children << new_child
+                    parent.children << new_child
                 end
 
                 def insert_after ( new_child )
-                    new_child.position = self.position + 1
-                    self.parent.children.each do |child|
+                    new_child.position = position + 1
+                    parent.children.each do |child|
                         if child.position >= new_child.position
                             child.update_attributes(:position => child.position + 1)
                         end
                     end
-                    self.parent.children << new_child
+                    parent.children << new_child
                 end
 
                 def move_to(target_node)
                     # unhinge - I was getting a nil on another implementation, so this is a bit longer but works
-                    child_ids_array = self.parent.child_ids.clone
-                    child_ids_array.delete(self.id)
+                    child_ids_array = parent.child_ids.clone
+                    child_ids_array.delete(id)
                     parent.update_attributes(:child_ids => child_ids_array )
                     self.update_attributes(:parent_ids => [])
                     # and append
                     target_node.children << self
                     # recurse through subtree
-                    self.rebuild_paths
+                    rebuild_paths
                 end
+                
 
                 def rebuild_paths
-                    self.update_path
-                    self.children.each do |child|
+                    update_path
+                    children.each do |child|
                         child.rebuild_paths
                     end
                 end
 
                 def update_path
                     self.update_attributes(:parent_ids => self.parent.parent_ids + [self.parent.id])
+                end
+                
+                def base_class
+                  @base_class ||= begin
+                    parent_classes = self.class.ancestors
+                    parent_classes[parent_classes.index(Mongoid::Acts::Tree::InstanceMethods) - 1]
+                  end
                 end
 
             end

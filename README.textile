@@ -6,6 +6,12 @@ Initially I thought of an embedded solution, but this will only be possible once
 
 However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with Cucumber and RSpec.
 
+h3. Documentation
+
+An API Documentation can be found here:
+
+"http://rubydoc.info/gems/mongoid_tree/":http://rubydoc.info/gems/mongoid_tree/
+
 h3. Screencasts
 
 I've made a screencast demonstrating our tree gem, where I go over the basic methods provided: 
