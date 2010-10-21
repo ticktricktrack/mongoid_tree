@@ -80,15 +80,15 @@ module Mongoid
                 end
                 
                 def root
-                  base_class.find(parent_ids.first)
+                  base_class.find(parent_ids.first) unless root?
                 end
                 
                 def ancestors
-                  base_class.where(:id.in => parent_ids)
+                  base_class.where(:_id.in => parent_ids)
                 end
                 
                 def ancestors_and_self
-                  ancestors + [self]
+                  ancestors << self
                 end
 
                 #Comparable
@@ -150,11 +150,28 @@ module Mongoid
                     child_ids_array = parent.child_ids.clone
                     child_ids_array.delete(id)
                     parent.update_attributes(:child_ids => child_ids_array )
-                    self.update_attributes(:parent_ids => [])
+                    self.update_attributes(:parent_ids => [], :position => nil )
                     # and append
                     target_node.children << self
                     # recurse through subtree
                     rebuild_paths
+                end
+                
+                def move_to_position(target_node, index)
+                  if index > target_node.child_ids.count
+                    move_to(target_node)
+                  else
+                    # unhinge - I was getting a nil on another implementation, so this is a bit longer but works
+                    child_ids_array = parent.child_ids.clone
+                    child_ids_array.delete(id)
+                    parent.update_attributes(:child_ids => child_ids_array )
+                    self.update_attributes(:parent_ids => [], :position => nil )
+                    
+                    target_node.children.sort[index - 1].insert_before(self)
+                    
+                    # recurse through subtree
+                    rebuild_paths
+                  end
                 end
                 
 

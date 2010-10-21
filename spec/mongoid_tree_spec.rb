@@ -1,13 +1,95 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "MongoidTree" do
+describe Mongoid::Acts::Tree do
 
   before do
     [ Node ].each { |klass| klass.collection.remove }
   end
-
+  
+  shared_examples_for "a root node" do
+    its (:parent_ids) {should be_empty}
+    its (:parent) {should be_nil}
+    its (:root) {should be_nil}
+    it {should be_root}
+    its (:ancestors) {should be_empty}
+    specify{subject.ancestors_and_self.should eq([subject])}
+  end
+  
+  shared_examples_for "a parent node" do
+    its (:child_ids) {should_not be_empty}
+    its (:children) {should_not eq([])}
+    specify{subject.depth_first.should_not eq([subject])}
+    specify{subject.breadth_first.should_not eq([subject])}
+  end
+  
+  shared_examples_for "a child node" do
+    its (:parent_ids) {should_not be_empty}
+    its (:parent) {should eq(parent)}
+    its (:root) {should_not be_nil}
+    it {should_not be_root}
+    its (:ancestors) {should_not be_empty}
+    specify{subject.ancestors_and_self.should_not eq([subject])}
+  end
+  
+  shared_examples_for "a leaf node" do
+    its (:child_ids) {should be_empty}
+    its (:children) {should eq([])}
+    specify{subject.depth_first.should eq([subject])}
+    specify{subject.breadth_first.should eq([subject])}
+    it { should be_a_leaf }
+    
+  end
+  
+  describe "A node" do
+    let(:node) { Node.create :name => "A Node" }
+    subject {node}
+    
+    it { should be_valid }
+    it_should_behave_like "a leaf node"
+    it_should_behave_like "a root node"
+    
+    context "when adding a child" do
+      let(:parent){node}
+      let(:child){Node.create(:name => "A Child")}          
+      before do
+        node.children << child
+      end
+      
+      it_should_behave_like "a parent node"
+      it_should_behave_like "a root node"
+      
+      it "should change the children count" do
+        expect{
+          node.children << Node.create(:name => "another child")
+        }.to change{node.child_ids.count}.by(1)
+      end
+      
+      it "should exist 2 nodes" do
+        Node.count.should be(2)
+      end
+      
+      it "should have 1 child" do
+        node.children.count.should be(1)
+      end
+      
+      it "should be able to access the child" do
+        node.children.first.should eq(child)
+      end
+      
+      its (:depth_first) {should eq([parent, child])}
+      its (:breadth_first) {should eq([parent,child])}
+      
+      context "the child" do
+        subject{child}
+        it_should_behave_like "a leaf node"
+        it_should_behave_like "a child node"
+      end
+      
+    end
+    
+  end
+    
   describe "A tree of nodes" do
-
     context "A node with a child" do
 
       before do
@@ -166,7 +248,21 @@ describe "MongoidTree" do
           getNode(9).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(6).id])
           getNode(10).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(6).id, getNode(9).id])
           getNode(11).parent_ids.should eql([getNode(1).id, getNode(2).id, getNode(6).id, getNode(9).id])
-          end
+        end
+      end
+
+      it "should fix the position" do
+        getNode(11).move_to(getNode(1))
+        getNode(11).position.should be(4)
+      end
+      
+      it "should move a node to a specific position" do
+        getNode(11).move_to_position(getNode(1),2)
+        getNode(2).position.should be(1)
+        getNode(11).position.should be(2)
+        getNode(7).position.should be(3)
+        getNode(8).position.should be(4)
+        
       end
 
     end
