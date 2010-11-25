@@ -144,13 +144,18 @@ module Mongoid
                     end
                     parent.children << new_child
                 end
+                
+                def unhinge
+                  # unhinge - I was getting a nil on another implementation, so this is a bit longer but works
+                  child_ids_array = parent.child_ids.clone
+                  child_ids_array.delete(id)
+                  parent.update_attributes(:child_ids => child_ids_array )
+                  self.update_attributes(:parent_ids => [], :position => nil )
+                end
 
                 def move_to(target_node)
                     # unhinge - I was getting a nil on another implementation, so this is a bit longer but works
-                    child_ids_array = parent.child_ids.clone
-                    child_ids_array.delete(id)
-                    parent.update_attributes(:child_ids => child_ids_array )
-                    self.update_attributes(:parent_ids => [], :position => nil )
+                    unhinge
                     # and append
                     target_node.children << self
                     # recurse through subtree
