@@ -6,6 +6,13 @@ Initially I thought of an embedded solution, but this will only be possible once
 
 However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with Cucumber and RSpec.
 
+h2{color:#990033}. I'm about to upgade mongoid_tree to support Mongoid 2.0.0.rc.1. All suggestions are very welcome. Now is the time!
+
+p{color:#990033}. What will be done so far:
+
+#{color:#990033} Custom association names. Was so far locked to parent/children
+# Relational or Embedded association
+
 h3. Documentation
 
 An API Documentation can be found here:
