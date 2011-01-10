@@ -1,3 +1,10 @@
+h1{color:#990033}. I'm about to upgade mongoid_tree to support Mongoid 2.0.0.rc.1. All suggestions are very welcome. Now is the time!
+
+h2{color:#990033}. What will be done so far:
+
+h3. Custom association names. Was so far locked to parent/children
+h3. Relational or Embedded association
+
 h1. mongoid_tree
 
 For our application we need a proper tree structure with Depth-First and Breadth-First searches, parent and child information. Also subtrees need to be exported to JSON. This gem will receive long-term support since we use it in our commercial long-term application.
@@ -5,13 +12,6 @@ For our application we need a proper tree structure with Depth-First and Breadth
 Initially I thought of an embedded solution, but this will only be possible once MongoDB supports embedded collections, and even deep-embedded collections.
 
 However this tree is right now on the top of our priority list, means we will put effort into this and release everything in this public gem, as soon as we implement and test it. It will be fully tested with Cucumber and RSpec.
-
-h2{color:#990033}. I'm about to upgade mongoid_tree to support Mongoid 2.0.0.rc.1. All suggestions are very welcome. Now is the time!
-
-p{color:#990033}. What will be done so far:
-
-#{color:#990033} Custom association names. Was so far locked to parent/children
-# Relational or Embedded association
 
 h3. Documentation
 
